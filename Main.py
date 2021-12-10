@@ -6,6 +6,9 @@ import keyboard
 import sys
 import os
 import json
+from pystray import MenuItem, Menu
+import pystray
+from PIL import Image, ImageTk
 
 data = ""
 snippets = ""
@@ -73,24 +76,23 @@ class MainFrame(Frame):
         self.abbreviation = tk.StringVar()
         self.abbreviation_entry = Entry(self, textvariable=self.abbreviation)
         self.abbreviation_entry.grid(column=1, row=0, **options)
-        self.abbreviation_entry.focus()
 
         # snippet text
         self.snippet_text = Text(self, height=5, width=30)
         self.snippet_text.grid(column=1, row=1, **options)
 
         # save button
-        self.save_button = Button(self, text='save')
+        self.save_button = Button(self, text='save', width=10)
         self.save_button['command'] = self.save_button_clicked
         self.save_button.grid(column=2, row=0, sticky=tk.W, **options)
 
         # new button
-        self.new_button = Button(self, text='new')
+        self.new_button = Button(self, text='new', width=10)
         self.new_button['command'] = self.new_button_clicked
         self.new_button.grid(column=2, row=1, sticky=tk.W, **options)
 
         # delete button
-        self.delete_button = Button(self, text='delete')
+        self.delete_button = Button(self, text='delete', width=10)
         self.delete_button['command'] = self.delete_button_clicked
         self.delete_button.grid(column=2, row=2, sticky=tk.W, **options)
 
@@ -105,7 +107,7 @@ class MainFrame(Frame):
             selectmode='SINGLE')
         self.listbox.grid(column=0, row=3, sticky=tk.W, **options)
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
-
+        self.listbox.focus()
 
         # add padding to the frame and show it
         self.grid(padx=10, pady=10, sticky=tk.NSEW)
@@ -138,6 +140,7 @@ class App(tk.Tk):
         self.geometry(self.set_window_size())
         self.resizable(False, False)
 
+        self.protocol('WM_DELETE_WINDOW', self.hide_window)
     def set_window_size(self):
         window_width = 500
         window_height = 400
@@ -153,6 +156,30 @@ class App(tk.Tk):
         # return the position of the window to the center of the screen
         return f'{window_width}x{window_height}+{center_x}+{center_y}'
 
+    # Define a function for quit the window
+    def quit_window(self, icon, item):
+        icon.stop()
+        self.destroy()
+
+    # Define a function to show the window again
+    def show_window(self, icon, item):
+        icon.stop()
+        self.after(0, self.deiconify())
+
+    # Hide the window and show on the system taskbar
+    def hide_window(self):
+        self.withdraw()
+        image = Image.open("C:\\Users\\Dana\\Downloads\\1768528-200.png")
+
+        menu = Menu(
+            MenuItem('Quit', self.quit_window),
+            MenuItem('Show', self.show_window, default=True)  # set 'Show' as the default action
+        )
+
+        icon = pystray.Icon("name", image, "My System Tray Icon", menu)
+        icon.run()
+
+
 if __name__ == "__main__":
     data = retrieve_db()
     populate_snippets_map(data["snippets"])
@@ -161,4 +188,6 @@ if __name__ == "__main__":
 
     app = App()
     MainFrame(app)
+
+
     app.mainloop()
