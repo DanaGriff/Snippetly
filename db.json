@@ -1,0 +1,24 @@
+{
+   "snippets":[
+      {
+         "abbreviation": "zzqa" ,
+         "text":"",
+         "template": "Ready For QA.txt"
+      },
+      {
+         "abbreviation": "zzcon" ,
+         "text":"",
+         "template": "Contact Info.txt"
+      },
+      {
+        "abbreviation": "zztext" ,
+         "text":"nice it works",
+         "template": ""
+      },
+      {
+        "abbreviation": "" ,
+         "text":"",
+         "template": ""
+      }
+   ]
+}
