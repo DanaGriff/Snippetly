@@ -11,15 +11,15 @@ import pystray
 from PIL import Image, ImageTk
 
 data = ""
-snippets = ""
-snippetsMap = {}
+hotkeys = ""
+hotkeysMap = {}
 
-def populate_snippets_map(snippets):
-    for snippet in snippets:
-        hotkey = snippet["hotkey"];
-        text_to_copy = snippet["text"];
+def populate_hotkeys_map(hotkeys):
+    for hotkey_i in hotkeys:
+        hotkey = hotkey_i["hotkey"];
+        text_to_copy = hotkey_i["text"];
 
-        snippetsMap[hotkey] = text_to_copy;
+        hotkeysMap[hotkey] = text_to_copy;
 
 def full_path(sub_folder, file_name):
     if getattr(sys, 'frozen', False):  # running in a bundle
@@ -45,7 +45,7 @@ def retrieve_db():
             sys.exit()
 
 def add_hotkeys():
-    for key, value in snippetsMap.items():
+    for key, value in hotkeysMap.items():
         keyboard.add_hotkey(key, value)
 
 class MainFrame(Frame):
@@ -59,18 +59,18 @@ class MainFrame(Frame):
         self.hotkey_label = Label(self, text='Hotkey')
         self.hotkey_label.grid(column=0, row=0, sticky=tk.W, **options)
 
-        # snippet label
-        self.snippet_label = Label(self, text='Text')
-        self.snippet_label.grid(column=0, row=1, sticky=tk.W, **options)
+        # hotkey label
+        self.hotkey_label = Label(self, text='Text')
+        self.hotkey_label.grid(column=0, row=1, sticky=tk.W, **options)
 
         # hotkey entry
         self.hotkey = tk.StringVar()
         self.hotkey_entry = Entry(self, textvariable=self.hotkey)
         self.hotkey_entry.grid(column=1, row=0, **options)
 
-        # snippet text
-        self.snippet_text = Text(self, height=5, width=30)
-        self.snippet_text.grid(column=1, row=1, **options)
+        # hotkey text
+        self.hotkey_text = Text(self, height=5, width=30)
+        self.hotkey_text.grid(column=1, row=1, **options)
 
         # save button
         self.save_button = Button(self, text='save', width=10)
@@ -88,7 +88,7 @@ class MainFrame(Frame):
         self.delete_button.grid(column=2, row=2, sticky=tk.W, **options)
 
         #hotkeys list
-        self.hotkeys_list = [*snippetsMap]
+        self.hotkeys_list = [*hotkeysMap]
 
         selectedItem = tk.StringVar(value=self.hotkeys_list)
 
@@ -105,7 +105,7 @@ class MainFrame(Frame):
 
     def save_button_clicked(self):
         key = self.hotkey_entry.get()
-        snippetsMap[key] = self.get_snippet_value()
+        hotkeysMap[key] = self.get_hotkey_value()
         ##TODO refresh list box
 
     def add_button_clicked(self):
@@ -113,18 +113,18 @@ class MainFrame(Frame):
         ##TODO refresh list box
 
     def delete_button_clicked(self):
-        snippetsMap.pop(self.selectedItem)
+        hotkeysMap.pop(self.selectedItem)
         ##TODO refresh list box
 
 
-    def get_snippet_value(self):
-        return self.snippet_text.get("1.0", "end")
+    def get_hotkey_value(self):
+        return self.hotkey_text.get("1.0", "end")
 
     def item_selected(self, event):
         selectedItem = ",".join([self.listbox.get(i) for i in self.listbox.curselection()])
 
-        self.snippet_text.delete('1.0', "end")
-        self.snippet_text.insert(tk.END, snippetsMap[selectedItem])
+        self.hotkey_text.delete('1.0', "end")
+        self.hotkey_text.insert(tk.END, hotkeysMap[selectedItem])
 
         self.hotkey_entry.delete(0, "end")
         self.hotkey_entry.insert(0, selectedItem)
@@ -133,7 +133,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title('Auto Snippet')
+        self.title('Auto hotkey')
         self.geometry(self.set_window_size())
         self.resizable(False, False)
 
@@ -183,7 +183,7 @@ class App(tk.Tk):
 
 if __name__ == "__main__":
     data = retrieve_db()
-    populate_snippets_map(data["snippets"])
+    populate_hotkeys_map(data["hotkeys"])
 
     app = App()
     MainFrame(app)
