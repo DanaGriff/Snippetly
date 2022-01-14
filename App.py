@@ -11,8 +11,10 @@ import pystray
 from PIL import Image, ImageTk
 
 class App(tk.Tk):
-    def __init__(self):
+    def __init__(self, hotkeysMap):
         super().__init__()
+
+        self.hotkeysMap = hotkeysMap
 
         self.title('Hotkeys Manager')
         self.geometry(self.set_window_size())
@@ -36,6 +38,7 @@ class App(tk.Tk):
 
     # Define a function for quit the window
     def quit_window(self, icon, item):
+        ##TODO Save to json
         icon.stop()
         self.destroy()
 
@@ -48,6 +51,7 @@ class App(tk.Tk):
 
     # Hide the window and show on the system taskbar
     def hide_window(self):
+        ##TODO Save to json
         for key, value in self.hotkeysMap.items():
             keyboard.add_hotkey(key, value)
 

@@ -20,7 +20,7 @@ class MainFrame(Frame):
         self.hotkey = tk.StringVar()
         self.key_entry = Entry(self, textvariable=self.hotkey)
         self.key_entry.grid(column=3, row=0, **options)
-
+        
         # text label
         self.text_label = Label(self, text='Text')
         self.text_label.grid(column=2, row=1, sticky=tk.W, **options)
@@ -44,13 +44,11 @@ class MainFrame(Frame):
         self.delete_button['command'] = self.delete_button_clicked
         self.delete_button.grid(column=1, row=2, sticky=tk.W, **options)
 
-        #hotkeys list
-        self.hotkeys_list = [*hotkeysMap]
-
-        selectedItem = tk.StringVar(value=self.hotkeys_list)
+        #hotkeys listbox
+        items = tk.StringVar(value=[*self.hotkeysMap])
 
         self.listbox = Listbox(self,
-            listvariable=selectedItem,
+            listvariable=items,
             height=10,
             selectmode='SINGLE')
         self.listbox.grid(column=0, row=0, columnspan=2, rowspan=2, sticky=tk.W, **options)
@@ -60,28 +58,49 @@ class MainFrame(Frame):
         # add padding to the frame and show it
         self.grid(padx=10, pady=10, sticky=tk.NSEW)
 
+    def item_selected(self, event):
+        self.selectedItem = event.widget.get(event.widget.curselection()[0])
+
+        selectedText = self.hotkeysMap[self.selectedItem]
+
+        self.value_text.delete('1.0', "end")
+        self.value_text.insert(tk.END, selectedText)
+
+        self.key_entry.delete(0, "end")
+        self.key_entry.insert(0, self.selectedItem)
+
     def save_button_clicked(self):
         key = self.key_entry.get()
         self.hotkeysMap[key] = self.get_hotkey_value()
-        ##TODO refresh list box
+
+        self.reset_form()
+        self.refresh_listbox()
 
     def add_button_clicked(self):
-        self.save_button_clicked()
-        ##TODO refresh list box
+        self.listbox.selection_clear(0, tk.END)
+        self.listbox.insert(tk.END, "")
+        self.listbox.selection_set(self.listbox.size()-1)
+
+        self.reset_form()
+
+        self.key_entry.focus_set()
 
     def delete_button_clicked(self):
         self.hotkeysMap.pop(self.selectedItem)
-        ##TODO refresh list box
-
+        self.refresh_listbox()
 
     def get_hotkey_value(self):
         return self.value_text.get("1.0", "end")
 
-    def item_selected(self, event):
-        self.selectedItem = ",".join([self.listbox.get(i) for i in self.listbox.curselection()])
-
+    def reset_form(self):
         self.value_text.delete('1.0', "end")
-        self.value_text.insert(tk.END, self.hotkeysMap[self.selectedItem])
+        self.value_text.insert(tk.END, "")
 
         self.key_entry.delete(0, "end")
-        self.key_entry.insert(0, self.selectedItem)
+        self.key_entry.insert(0, "")
+
+    def refresh_listbox(self):
+        self.listbox.delete(0, tk.END)
+
+        for i in self.hotkeysMap.keys():
+            self.listbox.insert(tk.END, i)
