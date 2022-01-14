@@ -1,15 +1,15 @@
 {
    "snippets":[
       {
-         "abbreviation": "zzqa",
+         "hotkey": "zzqa",
          "text": "Hi,\\nReady for QA"
       },
       {
-         "abbreviation": "zzcon" ,
+         "hotkey": "zzcon" ,
          "text": "Phone:\\nWorking Hours:"
       },
       {
-        "abbreviation": "zztext" ,
+        "hotkey": "zztext" ,
          "text": "nice it works"
       }
    ]

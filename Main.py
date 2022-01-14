@@ -16,10 +16,10 @@ snippetsMap = {}
 
 def populate_snippets_map(snippets):
     for snippet in snippets:
-        abbreviation = snippet["abbreviation"];
+        hotkey = snippet["hotkey"];
         text_to_copy = snippet["text"];
 
-        snippetsMap[abbreviation] = text_to_copy;
+        snippetsMap[hotkey] = text_to_copy;
 
 def full_path(sub_folder, file_name):
     if getattr(sys, 'frozen', False):  # running in a bundle
@@ -46,7 +46,7 @@ def retrieve_db():
 
 def add_hotkeys():
     for key, value in snippetsMap.items():
-        keyboard.add_abbreviation(key, value)
+        keyboard.add_hotkey(key, value)
 
 class MainFrame(Frame):
     def __init__(self, container):
@@ -55,18 +55,18 @@ class MainFrame(Frame):
         # field options
         options = {'padx': 5, 'pady': 5}
 
-        # abbreviation label
-        self.abbreviation_label = Label(self, text='Abbreviation')
-        self.abbreviation_label.grid(column=0, row=0, sticky=tk.W, **options)
+        # hotkey label
+        self.hotkey_label = Label(self, text='Hotkey')
+        self.hotkey_label.grid(column=0, row=0, sticky=tk.W, **options)
 
         # snippet label
-        self.snippet_label = Label(self, text='Snippet')
+        self.snippet_label = Label(self, text='Text')
         self.snippet_label.grid(column=0, row=1, sticky=tk.W, **options)
 
-        # abbreviation entry
-        self.abbreviation = tk.StringVar()
-        self.abbreviation_entry = Entry(self, textvariable=self.abbreviation)
-        self.abbreviation_entry.grid(column=1, row=0, **options)
+        # hotkey entry
+        self.hotkey = tk.StringVar()
+        self.hotkey_entry = Entry(self, textvariable=self.hotkey)
+        self.hotkey_entry.grid(column=1, row=0, **options)
 
         # snippet text
         self.snippet_text = Text(self, height=5, width=30)
@@ -87,10 +87,10 @@ class MainFrame(Frame):
         self.delete_button['command'] = self.delete_button_clicked
         self.delete_button.grid(column=2, row=2, sticky=tk.W, **options)
 
-        #abbreviations list
-        self.abbreviations_list = [*snippetsMap]
+        #hotkeys list
+        self.hotkeys_list = [*snippetsMap]
 
-        selectedItem = tk.StringVar(value=self.abbreviations_list)
+        selectedItem = tk.StringVar(value=self.hotkeys_list)
 
         self.listbox = Listbox(self,
             listvariable=selectedItem,
@@ -104,7 +104,7 @@ class MainFrame(Frame):
         self.grid(padx=10, pady=10, sticky=tk.NSEW)
 
     def save_button_clicked(self):
-        key = self.abbreviation_entry.get()
+        key = self.hotkey_entry.get()
         snippetsMap[key] = self.get_snippet_value()
         ##TODO refresh list box
 
@@ -126,8 +126,8 @@ class MainFrame(Frame):
         self.snippet_text.delete('1.0', "end")
         self.snippet_text.insert(tk.END, snippetsMap[selectedItem])
 
-        self.abbreviation_entry.delete(0, "end")
-        self.abbreviation_entry.insert(0, selectedItem)
+        self.hotkey_entry.delete(0, "end")
+        self.hotkey_entry.insert(0, selectedItem)
 
 class App(tk.Tk):
     def __init__(self):
@@ -167,7 +167,7 @@ class App(tk.Tk):
 
     # Hide the window and show on the system taskbar
     def hide_window(self):
-        add_hotkeys();
+        add_hotkeys()
 
         self.withdraw()
         image = Image.open("C:\\Users\\Dana\\Downloads\\1768528-200.png")
