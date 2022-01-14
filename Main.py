@@ -19,14 +19,7 @@ def populate_snippets_map(snippets):
         abbreviation = snippet["abbreviation"];
         text_to_copy = snippet["text"];
 
-        if len(text_to_copy) > 0:
-            snippetsMap[abbreviation] = text_to_copy;
-        else:
-            template = snippet["template"];
-
-            if len(template) > 0:
-                fo = open(full_path('snippets', template)).read()
-                snippetsMap[abbreviation] = fo;
+        snippetsMap[abbreviation] = text_to_copy;
 
 def full_path(sub_folder, file_name):
     if getattr(sys, 'frozen', False):  # running in a bundle
@@ -54,8 +47,6 @@ def retrieve_db():
 def add_hotkeys():
     for key, value in snippetsMap.items():
         keyboard.add_abbreviation(key, value)
-
-    #keyboard.wait()
 
 class MainFrame(Frame):
     def __init__(self, container):
@@ -86,10 +77,10 @@ class MainFrame(Frame):
         self.save_button['command'] = self.save_button_clicked
         self.save_button.grid(column=2, row=0, sticky=tk.W, **options)
 
-        # new button
-        self.new_button = Button(self, text='new', width=10)
-        self.new_button['command'] = self.new_button_clicked
-        self.new_button.grid(column=2, row=1, sticky=tk.W, **options)
+        # Add button
+        self.add_button = Button(self, text='Add', width=10)
+        self.add_button['command'] = self.add_button_clicked
+        self.add_button.grid(column=2, row=1, sticky=tk.W, **options)
 
         # delete button
         self.delete_button = Button(self, text='delete', width=10)
@@ -97,12 +88,12 @@ class MainFrame(Frame):
         self.delete_button.grid(column=2, row=2, sticky=tk.W, **options)
 
         #abbreviations list
-        abbreviations_list = [*snippetsMap]
+        self.abbreviations_list = [*snippetsMap]
 
-        self.selectedItem = tk.StringVar(value=abbreviations_list)
+        selectedItem = tk.StringVar(value=self.abbreviations_list)
 
         self.listbox = Listbox(self,
-            listvariable=self.selectedItem,
+            listvariable=selectedItem,
             height=10,
             selectmode='SINGLE')
         self.listbox.grid(column=0, row=3, sticky=tk.W, **options)
@@ -113,24 +104,30 @@ class MainFrame(Frame):
         self.grid(padx=10, pady=10, sticky=tk.NSEW)
 
     def save_button_clicked(self):
-        print('save clicked');
+        key = self.abbreviation_entry.get()
+        snippetsMap[key] = self.get_snippet_value()
+        ##TODO refresh list box
 
-    def new_button_clicked(self):
-        print('new clicked');
+    def add_button_clicked(self):
+        self.save_button_clicked()
+        ##TODO refresh list box
 
     def delete_button_clicked(self):
-        print('delete clicked');
+        snippetsMap.pop(self.selectedItem)
+        ##TODO refresh list box
+
+
+    def get_snippet_value(self):
+        return self.snippet_text.get("1.0", "end")
 
     def item_selected(self, event):
-        selected = ",".join([self.listbox.get(i) for i in self.listbox.curselection()])
+        selectedItem = ",".join([self.listbox.get(i) for i in self.listbox.curselection()])
 
         self.snippet_text.delete('1.0', "end")
-        self.snippet_text.insert(tk.END, snippetsMap[selected])
+        self.snippet_text.insert(tk.END, snippetsMap[selectedItem])
 
         self.abbreviation_entry.delete(0, "end")
-        self.abbreviation_entry.insert(0, selected)
-
-
+        self.abbreviation_entry.insert(0, selectedItem)
 
 class App(tk.Tk):
     def __init__(self):
@@ -163,11 +160,15 @@ class App(tk.Tk):
 
     # Define a function to show the window again
     def show_window(self, icon, item):
+        keyboard.unhook_all()
+
         icon.stop()
         self.after(0, self.deiconify())
 
     # Hide the window and show on the system taskbar
     def hide_window(self):
+        add_hotkeys();
+
         self.withdraw()
         image = Image.open("C:\\Users\\Dana\\Downloads\\1768528-200.png")
 
@@ -184,10 +185,15 @@ if __name__ == "__main__":
     data = retrieve_db()
     populate_snippets_map(data["snippets"])
 
-    #add_hotkeys();  ##TODO work run when window not minimized, add label that hotkeys are disabled when window is open
-
     app = App()
     MainFrame(app)
 
-
     app.mainloop()
+
+
+#add button
+#delete button
+#save json
+#add start\stop button
+#double clicking text removes it
+#\n not written properly
