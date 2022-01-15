@@ -17,14 +17,14 @@ class Window(ttk.Window):
         super().__init__(themename="litera")
 
         self.abbreviations = abbreviations
-
+        self.iconbitmap("images/fire-icon.ico")
         self.title('Hotkeys Manager')
         self.geometry(self.set_window_size())
         self.resizable(False, False)
 
         self.protocol('WM_DELETE_WINDOW', self.hide_window)
     def set_window_size(self):
-        window_width = 500
+        window_width = 485
         window_height = 250
 
         # get the screen dimension

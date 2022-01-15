@@ -29,22 +29,23 @@ class MainFrame(Frame):
 
         self.listbox = Listbox(container,
             listvariable=items,
-            height=10,
-            width=23,
+            height=9,
+            width=18,
+            font=('TkDefaultFont', 11),
             selectmode='SINGLE')
         self.listbox.place(x=LEFT_PAD, y=TOP_PAD)
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
         self.listbox.focus()
 
           # Add button
-        self.add_button = Button(container, text='Add', width=7)
+        self.add_button = Button(container, text='Add', width=7, bootstyle="success")
         self.add_button['command'] = self.add_button_clicked
         self.add_button.place(x=LEFT_PAD, y=TOP_PAD+175)
 
         # delete button
-        self.delete_button = Button(container, text='Delete', width=7)
+        self.delete_button = Button(container, text='Delete', width=7, bootstyle="danger")
         self.delete_button['command'] = self.delete_button_clicked
-        self.delete_button.place(x=LEFT_PAD+75, y=TOP_PAD+175)
+        self.delete_button.place(x=LEFT_PAD+82, y=TOP_PAD+175)
 
         # hotkey label
         self.hotkey_label = Label(container, text='Hotkey')
