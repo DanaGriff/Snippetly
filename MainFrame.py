@@ -1,16 +1,16 @@
 import tkinter as tk
 from tkinter.messagebox import showerror
 from tkinter.ttk import Frame, Button, Label, Entry
-from tkinter import Text, Listbox, Menu, Toplevel, messagebox
+from tkinter import Text, Listbox, Menu, messagebox
 import DAL
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
 class MainFrame(Frame):
-    def __init__(self, container, data, hotkeysMap):
+    def __init__(self, container, data):
         super().__init__(container)
 
-        self.hotkeysMap = hotkeysMap
+        self.hotkeysMap = DAL.populate_hotkeys_map(data["hotkeys"])
         self.data = data
 
         menubar = Menu(container)

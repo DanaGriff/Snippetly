@@ -1,17 +1,12 @@
 import keyboard
+import DAL
 
-class Abbreviations():
-    def __init__(self, hotkeysMap):
-        super().__init__()
+def hook():
+    data = DAL.retrieve_db()
+    hotkeysMap = DAL.populate_hotkeys_map(data["hotkeys"])
 
-        self.hotkeysMap = hotkeysMap
+    for key, value in hotkeysMap.items():
+        keyboard.add_abbreviation(key, value)
 
-    def add(self):
-        for key, value in self.hotkeysMap.items():
-            keyboard.add_abbreviation(key, value)
-    
-    def unhook(self):
-        keyboard.unhook_all()
-
-
-    
+def unhook(self):
+    keyboard.unhook_all()

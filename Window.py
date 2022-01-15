@@ -1,22 +1,14 @@
-import tkinter as tk
-from tkinter.messagebox import showerror
-from tkinter.ttk import Frame, Button, Label, Style, Entry
-from tkinter import Text, Listbox
-import keyboard
-import sys
-import os
-import json
 from pystray import MenuItem, Menu
 import pystray
-from PIL import Image, ImageTk
+from PIL import Image
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
+import Abbreviations
 
 class Window(ttk.Window):
-    def __init__(self, abbreviations):
+    def __init__(self):
         super().__init__(themename="litera")
 
-        self.abbreviations = abbreviations
         self.iconbitmap("images/fire-icon.ico")
         self.title('Hotkeys Manager')
         self.geometry(self.set_window_size())
@@ -52,7 +44,7 @@ class Window(ttk.Window):
 
     # Hide the window and show on the system taskbar
     def hide_window(self):
-        self.abbreviations.add()
+        Abbreviations.hook()
 
         self.withdraw()
         image = Image.open("C:\\Users\\Dana\\Downloads\\1768528-200.png")
