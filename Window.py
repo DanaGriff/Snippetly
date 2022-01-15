@@ -9,10 +9,12 @@ import json
 from pystray import MenuItem, Menu
 import pystray
 from PIL import Image, ImageTk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
-class Window(tk.Tk):
+class Window(ttk.Window):
     def __init__(self, abbreviations):
-        super().__init__()
+        super().__init__(themename="litera")
 
         self.abbreviations = abbreviations
 
@@ -23,7 +25,7 @@ class Window(tk.Tk):
         self.protocol('WM_DELETE_WINDOW', self.hide_window)
     def set_window_size(self):
         window_width = 500
-        window_height = 300
+        window_height = 250
 
         # get the screen dimension
         screen_width = self.winfo_screenwidth()

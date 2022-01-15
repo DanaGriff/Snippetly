@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinter.messagebox import showerror
 from tkinter.ttk import Frame, Button, Label, Entry
-from tkinter import Text, Listbox
+from tkinter import Text, Listbox, Menu, Toplevel, messagebox
 import DAL
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
 class MainFrame(Frame):
     def __init__(self, container, data, hotkeysMap):
@@ -11,54 +13,61 @@ class MainFrame(Frame):
         self.hotkeysMap = hotkeysMap
         self.data = data
 
-        # field options
-        options = {'padx': 5, 'pady': 5}
-
-        # hotkey label
-        self.hotkey_label = Label(self, text='Hotkey')
-        self.hotkey_label.grid(column=2, row=0, sticky=tk.W, **options)
-
-        # hotkey entry
-        self.hotkey = tk.StringVar()
-        self.key_entry = Entry(self, textvariable=self.hotkey)
-        self.key_entry.grid(column=3, row=0, **options)
+        menubar = Menu(container)
         
-        # text label
-        self.text_label = Label(self, text='Text')
-        self.text_label.grid(column=2, row=1, sticky=tk.W, **options)
+        helpmenu = Menu(menubar, tearoff=0)
+        helpmenu.add_command(label="Documnetation", command=self.documnetation_clicked)
+        helpmenu.add_command(label="About..", command=self.about_clicked)
+        menubar.add_cascade(label="Help", menu=helpmenu)
 
-        # hotkey text
-        self.value_text = Text(self, height=5, width=30)
-        self.value_text.grid(column=3, row=1, columnspan=2, **options)
+        container.config(menu=menubar)
 
-        # save button
-        self.save_button = Button(self, text='save', width=10)
-        self.save_button['command'] = self.save_button_clicked
-        self.save_button.grid(column=4, row=2, sticky=tk.W, **options)
-
-        # Add button
-        self.add_button = Button(self, text='Add', width=10)
-        self.add_button['command'] = self.add_button_clicked
-        self.add_button.grid(column=0, row=2, sticky=tk.W, **options)
-
-        # delete button
-        self.delete_button = Button(self, text='delete', width=10)
-        self.delete_button['command'] = self.delete_button_clicked
-        self.delete_button.grid(column=1, row=2, sticky=tk.W, **options)
-
+        LEFT_PAD = 15
+        TOP_PAD = 15
         #hotkeys listbox
         items = tk.StringVar(value=[*self.hotkeysMap])
 
-        self.listbox = Listbox(self,
+        self.listbox = Listbox(container,
             listvariable=items,
             height=10,
+            width=23,
             selectmode='SINGLE')
-        self.listbox.grid(column=0, row=0, columnspan=2, rowspan=2, sticky=tk.W, **options)
+        self.listbox.place(x=LEFT_PAD, y=TOP_PAD)
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
         self.listbox.focus()
 
-        # add padding to the frame and show it
-        self.grid(padx=10, pady=10, sticky=tk.NSEW)
+          # Add button
+        self.add_button = Button(container, text='Add', width=7)
+        self.add_button['command'] = self.add_button_clicked
+        self.add_button.place(x=LEFT_PAD, y=TOP_PAD+175)
+
+        # delete button
+        self.delete_button = Button(container, text='Delete', width=7)
+        self.delete_button['command'] = self.delete_button_clicked
+        self.delete_button.place(x=LEFT_PAD+75, y=TOP_PAD+175)
+
+        # hotkey label
+        self.hotkey_label = Label(container, text='Hotkey')
+        self.hotkey_label.place(x=LEFT_PAD+200, y=TOP_PAD+3)
+
+        # hotkey entry
+        self.hotkey = tk.StringVar()
+        self.key_entry = Entry(container, textvariable=self.hotkey)
+        self.key_entry.place(x=LEFT_PAD+260, y=TOP_PAD)
+        
+        # text label
+        self.text_label = Label(container, text='Text')
+        self.text_label.place(x=LEFT_PAD+200, y=TOP_PAD+46)
+
+        # hotkey text
+        self.value_text = Text(container, height=7, width=30)
+        self.value_text.place(x=LEFT_PAD+260, y=TOP_PAD+46)
+
+        # save button
+        self.save_button = Button(container, text='Save', width=10)
+        self.save_button['command'] = self.save_button_clicked
+        self.save_button.place(x=LEFT_PAD+370, y=TOP_PAD+175)
+
 
     def item_selected(self, event):
         self.selectedItem = event.widget.get(event.widget.curselection()[0])
@@ -119,3 +128,9 @@ class MainFrame(Frame):
             self.data['hotkeys'].append(attribute)
 
         DAL.save_to_db(self.data)
+
+    def documnetation_clicked(self):
+        messagebox.showinfo(title="Documenation", message="PLACEHOLDER")
+
+    def about_clicked(self):
+        messagebox.showinfo(title="About", message="PLACEHOLDER")
