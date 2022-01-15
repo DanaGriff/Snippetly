@@ -94,6 +94,7 @@ class MainFrame(Frame):
             
 
     def add_button_clicked(self):
+        self.selectedItem = None
         self.listbox.selection_clear(0, tk.END)
         self.listbox.insert(tk.END, "")
         self.listbox.selection_set(self.listbox.size()-1)
@@ -103,7 +104,8 @@ class MainFrame(Frame):
         self.key_entry.focus_set()
 
     def delete_button_clicked(self):
-        self.hotkeysMap.pop(self.selectedItem)
+        if self.selectedItem != None:
+            self.hotkeysMap.pop(self.selectedItem)
         
         self.refresh_listbox()
         self.save_hotkeys_to_db()
