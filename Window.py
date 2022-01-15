@@ -10,7 +10,7 @@ from pystray import MenuItem, Menu
 import pystray
 from PIL import Image, ImageTk
 
-class App(tk.Tk):
+class Window(tk.Tk):
     def __init__(self, hotkeysMap):
         super().__init__()
 
@@ -38,7 +38,6 @@ class App(tk.Tk):
 
     # Define a function for quit the window
     def quit_window(self, icon, item):
-        ##TODO Save to json
         icon.stop()
         self.destroy()
 
@@ -51,7 +50,6 @@ class App(tk.Tk):
 
     # Hide the window and show on the system taskbar
     def hide_window(self):
-        ##TODO Save to json
         for key, value in self.hotkeysMap.items():
             keyboard.add_hotkey(key, value)
 
@@ -65,4 +63,3 @@ class App(tk.Tk):
 
         icon = pystray.Icon("name", image, "My System Tray Icon", menu)
         icon.run()
-
