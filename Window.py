@@ -17,7 +17,7 @@ class Window(ttk.Window):
         self.protocol('WM_DELETE_WINDOW', self.hide_window)
     def set_window_size(self):
         window_width = 485
-        window_height = 250
+        window_height = 270
 
         # get the screen dimension
         screen_width = self.winfo_screenwidth()
@@ -47,12 +47,12 @@ class Window(ttk.Window):
         Abbreviations.hook()
 
         self.withdraw()
-        image = Image.open("C:\\Users\\Dana\\Downloads\\1768528-200.png")
+        image = Image.open("images/fire-icon.ico")
 
         menu = Menu(
             MenuItem('Quit', self.quit_window),
             MenuItem('Show', self.show_window, default=True)  # set 'Show' as the default action
         )
 
-        icon = pystray.Icon("name", image, "My System Tray Icon", menu)
+        icon = pystray.Icon("name", image, "Hotkeys Manager", menu)
         icon.run()

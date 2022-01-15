@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter.messagebox import showerror
 from tkinter.ttk import Frame, Button, Label, Entry
-from tkinter import Text, Listbox, Menu, messagebox
+from tkinter import Text, Listbox, Menu, Toplevel, Message
 import DAL
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
+import webbrowser
 
 class MainFrame(Frame):
     def __init__(self, container, data):
@@ -12,15 +13,6 @@ class MainFrame(Frame):
 
         self.hotkeysMap = DAL.populate_hotkeys_map(data["hotkeys"])
         self.data = data
-
-        menubar = Menu(container)
-        
-        helpmenu = Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Documnetation", command=self.documnetation_clicked)
-        helpmenu.add_command(label="About..", command=self.about_clicked)
-        menubar.add_cascade(label="Help", menu=helpmenu)
-
-        container.config(menu=menubar)
 
         LEFT_PAD = 15
         TOP_PAD = 15
@@ -70,6 +62,11 @@ class MainFrame(Frame):
         self.save_button['command'] = self.save_button_clicked
         self.save_button.place(x=LEFT_PAD+370, y=TOP_PAD+175)
 
+        
+        self.copyrights_label = Label(container, text="© Dana Griff", foreground="blue", cursor="hand2")
+        self.copyrights_label.bind("<Button-1>", lambda e: self.callback("https://github.com/DanaGriff"))
+        self.copyrights_label.place(x=LEFT_PAD+390, y=TOP_PAD+230)
+
 
     def item_selected(self, event):
         self.selectedItem = event.widget.get(event.widget.curselection()[0])
@@ -84,7 +81,7 @@ class MainFrame(Frame):
 
     def save_button_clicked(self):
         key = self.key_entry.get()
-        if key.len() > 0 and key != None:
+        if key != None and len(key) > 0:
             self.hotkeysMap[key] = self.get_hotkey_value()
 
             self.save_hotkeys_to_db()
@@ -92,7 +89,6 @@ class MainFrame(Frame):
         self.reset_form()
         self.refresh_listbox()
             
-
     def add_button_clicked(self):
         self.selectedItem = None
         self.listbox.selection_clear(0, tk.END)
@@ -135,8 +131,6 @@ class MainFrame(Frame):
 
         DAL.save_to_db(self.data)
 
-    def documnetation_clicked(self):
-        messagebox.showinfo(title="Documenation", message="PLACEHOLDER")
-
-    def about_clicked(self):
-        messagebox.showinfo(title="About", message="PLACEHOLDER")
+    def callback(self, url):
+        webbrowser.open_new(url)
+    
