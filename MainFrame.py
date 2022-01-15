@@ -84,12 +84,14 @@ class MainFrame(Frame):
 
     def save_button_clicked(self):
         key = self.key_entry.get()
-        self.hotkeysMap[key] = self.get_hotkey_value()
+        if key.len() > 0 and key != None:
+            self.hotkeysMap[key] = self.get_hotkey_value()
+
+            self.save_hotkeys_to_db()
 
         self.reset_form()
-
         self.refresh_listbox()
-        self.save_hotkeys_to_db()
+            
 
     def add_button_clicked(self):
         self.listbox.selection_clear(0, tk.END)
