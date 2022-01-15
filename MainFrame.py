@@ -24,6 +24,7 @@ class MainFrame(Frame):
 
         LEFT_PAD = 15
         TOP_PAD = 15
+        
         #hotkeys listbox
         items = tk.StringVar(value=[*self.hotkeysMap])
 
@@ -106,7 +107,7 @@ class MainFrame(Frame):
         self.save_hotkeys_to_db()
 
     def get_hotkey_value(self):
-        return self.value_text.get("1.0", "end")
+        return self.value_text.get("1.0", "end").rstrip("\n")
 
     def reset_form(self):
         self.value_text.delete('1.0', "end")
