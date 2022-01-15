@@ -23,7 +23,7 @@ class Window(tk.Tk):
         self.protocol('WM_DELETE_WINDOW', self.hide_window)
     def set_window_size(self):
         window_width = 500
-        window_height = 400
+        window_height = 300
 
         # get the screen dimension
         screen_width = self.winfo_screenwidth()
