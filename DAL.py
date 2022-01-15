@@ -27,4 +27,15 @@ def retrieve_db():
 
 def save_to_db(data):
     with open(full_path('', 'data.json'), 'w') as database_file:
-        json.dump(data, database_file)       
+        json.dump(data, database_file)
+
+def populate_hotkeys_map(hotkeys):
+    hotkeysMap = {}
+
+    for hotkey_i in hotkeys:
+        hotkey = hotkey_i["hotkey"]
+        text_to_copy = hotkey_i["text"]
+
+        hotkeysMap[hotkey] = text_to_copy
+
+    return hotkeysMap

@@ -11,10 +11,10 @@ import pystray
 from PIL import Image, ImageTk
 
 class Window(tk.Tk):
-    def __init__(self, hotkeysMap):
+    def __init__(self, abbreviations):
         super().__init__()
 
-        self.hotkeysMap = hotkeysMap
+        self.abbreviations = abbreviations
 
         self.title('Hotkeys Manager')
         self.geometry(self.set_window_size())
@@ -43,15 +43,14 @@ class Window(tk.Tk):
 
     # Define a function to show the window again
     def show_window(self, icon, item):
-        keyboard.unhook_all()
+        self.abbreviations.unhook()
 
         icon.stop()
         self.after(0, self.deiconify())
 
     # Hide the window and show on the system taskbar
     def hide_window(self):
-        for key, value in self.hotkeysMap.items():
-            keyboard.add_hotkey(key, value)
+        self.abbreviations.add()
 
         self.withdraw()
         image = Image.open("C:\\Users\\Dana\\Downloads\\1768528-200.png")

@@ -2,12 +2,14 @@ import tkinter as tk
 from tkinter.messagebox import showerror
 from tkinter.ttk import Frame, Button, Label, Entry
 from tkinter import Text, Listbox
+import DAL
 
 class MainFrame(Frame):
-    def __init__(self, container, hotkeysMap):
+    def __init__(self, container, data, hotkeysMap):
         super().__init__(container)
 
         self.hotkeysMap = hotkeysMap
+        self.data = data
 
         # field options
         options = {'padx': 5, 'pady': 5}
@@ -74,7 +76,9 @@ class MainFrame(Frame):
         self.hotkeysMap[key] = self.get_hotkey_value()
 
         self.reset_form()
+
         self.refresh_listbox()
+        self.save_hotkeys_to_db()
 
     def add_button_clicked(self):
         self.listbox.selection_clear(0, tk.END)
@@ -87,7 +91,9 @@ class MainFrame(Frame):
 
     def delete_button_clicked(self):
         self.hotkeysMap.pop(self.selectedItem)
+        
         self.refresh_listbox()
+        self.save_hotkeys_to_db()
 
     def get_hotkey_value(self):
         return self.value_text.get("1.0", "end")
@@ -104,3 +110,12 @@ class MainFrame(Frame):
 
         for i in self.hotkeysMap.keys():
             self.listbox.insert(tk.END, i)
+
+    def save_hotkeys_to_db(self):
+        self.data['hotkeys'] = []
+        for key, value in self.hotkeysMap.items():
+            attribute = { 'hotkey' : key, 'text' : value}
+
+            self.data['hotkeys'].append(attribute)
+
+        DAL.save_to_db(self.data)
