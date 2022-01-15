@@ -1,8 +1,6 @@
 import DAL
-from App import App
+from Window import Window
 from MainFrame import MainFrame
-
-
 
 def populate_hotkeys_map(hotkeys):
     hotkeysMap = {}
@@ -20,7 +18,10 @@ if __name__ == "__main__":
     
     hotkeysMap = populate_hotkeys_map(data["hotkeys"])
 
-    app = App(hotkeysMap)
-    MainFrame(app, hotkeysMap)
+    window = Window(hotkeysMap)
+    MainFrame(window, data, hotkeysMap)
 
-    app.mainloop()
+    window.mainloop()
+
+
+    ##TODO check empty db

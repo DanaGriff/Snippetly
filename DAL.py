@@ -17,10 +17,14 @@ def full_path(sub_folder, file_name):
         return os.path.join(dir_path, file_name)
 
 def retrieve_db():
-    with open(full_path('', 'data.json')) as settings_file:
+    with open(full_path('', 'data.json')) as database_file:
         try:
-            json_data = json.load(settings_file)
+            json_data = json.load(database_file)
             return json_data
         except ValueError:
             print('The JSON File is missing or corrupted')
             sys.exit()
+
+def save_to_db(data):
+    with open(full_path('', 'data.json'), 'w') as database_file:
+        json.dump(data, database_file)       
