@@ -46,7 +46,7 @@ class MainFrame(Frame):
 
         # hotkey entry
         self.hotkey = tk.StringVar()
-        self.key_entry = Entry(container, textvariable=self.hotkey)
+        self.key_entry = Entry(container, textvariable=self.hotkey, state = "disabled")
         self.key_entry.place(x=LEFT_PAD+260, y=TOP_PAD)
         
         # text label
@@ -54,21 +54,23 @@ class MainFrame(Frame):
         self.text_label.place(x=LEFT_PAD+200, y=TOP_PAD+46)
 
         # hotkey text
-        self.value_text = Text(container, height=7, width=30)
+        self.value_text = Text(container, height=7, width=30, state = "disabled")
         self.value_text.place(x=LEFT_PAD+260, y=TOP_PAD+46)
 
         # save button
         self.save_button = Button(container, text='Save', width=10)
         self.save_button['command'] = self.save_button_clicked
+        self.save_button['state'] = tk.DISABLED
         self.save_button.place(x=LEFT_PAD+370, y=TOP_PAD+175)
 
         
         self.copyrights_label = Label(container, text="© Dana Griff", foreground="blue", cursor="hand2")
-        self.copyrights_label.bind("<Button-1>", lambda e: self.callback("https://github.com/DanaGriff"))
+        self.copyrights_label.bind("<Button-1>", lambda e: self.open_url("https://github.com/DanaGriff"))
         self.copyrights_label.place(x=LEFT_PAD+390, y=TOP_PAD+230)
 
 
     def item_selected(self, event):
+        self.switch_form_state("normal")
         self.selectedItem = event.widget.get(event.widget.curselection()[0])
 
         selectedText = self.hotkeysMap[self.selectedItem]
@@ -88,6 +90,7 @@ class MainFrame(Frame):
 
         self.reset_form()
         self.refresh_listbox()
+        
             
     def add_button_clicked(self):
         self.selectedItem = None
@@ -96,13 +99,14 @@ class MainFrame(Frame):
         self.listbox.selection_set(self.listbox.size()-1)
 
         self.reset_form()
-
+        self.switch_form_state("normal")
         self.key_entry.focus_set()
 
     def delete_button_clicked(self):
         if self.selectedItem != None:
             self.hotkeysMap.pop(self.selectedItem)
         
+        self.reset_form()
         self.refresh_listbox()
         self.save_hotkeys_to_db()
 
@@ -115,6 +119,8 @@ class MainFrame(Frame):
 
         self.key_entry.delete(0, "end")
         self.key_entry.insert(0, "")
+
+        self.switch_form_state("disabled")
 
     def refresh_listbox(self):
         self.listbox.delete(0, tk.END)
@@ -131,6 +137,10 @@ class MainFrame(Frame):
 
         DAL.save_to_db(self.data)
 
-    def callback(self, url):
+    def open_url(self, url):
         webbrowser.open_new(url)
-    
+
+    def switch_form_state(self, set_state):
+        self.save_button['state'] = set_state
+        self.value_text.configure(state = set_state)
+        self.key_entry.configure(state = set_state, )
