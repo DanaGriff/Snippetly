@@ -3,7 +3,7 @@ import DAL
 
 def hook():
     data = DAL.retrieve_db()
-    hotkeysMap = DAL.populate_hotkeys_map(data["hotkeys"])
+    hotkeysMap = DAL.get_hotkeys_dict(data)
 
     for key, value in hotkeysMap.items():
         keyboard.add_abbreviation(key, value)

@@ -11,7 +11,7 @@ class MainFrame(Frame):
     def __init__(self, container, data):
         super().__init__(container)
 
-        self.hotkeysMap = DAL.populate_hotkeys_map(data["hotkeys"])
+        self.hotkeysMap = DAL.get_hotkeys_dict(data)
         self.data = data
 
         LEFT_PAD = 15

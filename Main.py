@@ -9,5 +9,3 @@ if __name__ == "__main__":
     MainFrame(window, data)
 
     window.mainloop()
-
-    ##TODO check empty db
