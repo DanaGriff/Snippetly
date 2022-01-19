@@ -7,7 +7,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import webbrowser
 
-class MainFrame(Frame):
+class MainApp(Frame):
     def __init__(self, container, data):
         super().__init__(container)
 

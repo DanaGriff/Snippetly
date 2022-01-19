@@ -1,11 +1,11 @@
 import DAL
 from Window import Window
-from MainFrame import MainFrame
+from MainApp import MainApp
 
 if __name__ == "__main__":
     data = DAL.retrieve_db()
 
     window = Window()
-    MainFrame(window, data)
+    MainApp(window, data)
 
     window.mainloop()
