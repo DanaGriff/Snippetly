@@ -3,8 +3,6 @@ from tkinter.messagebox import showerror
 from tkinter.ttk import Frame, Button, Label, Entry
 from tkinter import Text, Listbox, Menu, Toplevel, Message
 import DAL
-import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
 import webbrowser
 
 class MainApp(Frame):
@@ -33,17 +31,17 @@ class MainApp(Frame):
         self.listbox.focus()
 
         # Add button
-        self.add_button = Button(container, text='Add', width=7, bootstyle="success")
+        self.add_button = Button(container, text='Add', width=7)
         self.add_button['command'] = self.add_button_clicked
         self.add_button.place(x=LEFT_PAD, y=TOP_PAD+175)
 
         # edit button
-        self.edit_button = Button(container, text='Edit', width=7, bootstyle="default")
+        self.edit_button = Button(container, text='Edit', width=7)
         self.edit_button['command'] = self.edit_button_clicked
         self.edit_button.place(x=LEFT_PAD+75, y=TOP_PAD+175)
 
         # delete button
-        self.delete_button = Button(container, text='Delete', width=7, bootstyle="danger")
+        self.delete_button = Button(container, text='Delete', width=7)
         self.delete_button['command'] = self.delete_button_clicked
         self.delete_button.place(x=LEFT_PAD+120, y=TOP_PAD+175)
 
