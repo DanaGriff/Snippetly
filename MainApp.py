@@ -8,9 +8,11 @@ from ttkbootstrap.constants import *
 import webbrowser
 
 class MainApp(Frame):
+
     def __init__(self, container, data):
         super().__init__(container)
 
+        self.selectedItem = None
         self.hotkeysMap = DAL.get_hotkeys_dict(data)
         self.data = data
 
@@ -30,15 +32,20 @@ class MainApp(Frame):
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
         self.listbox.focus()
 
-          # Add button
+        # Add button
         self.add_button = Button(container, text='Add', width=7, bootstyle="success")
         self.add_button['command'] = self.add_button_clicked
         self.add_button.place(x=LEFT_PAD, y=TOP_PAD+175)
 
+        # edit button
+        self.edit_button = Button(container, text='Edit', width=7, bootstyle="default")
+        self.edit_button['command'] = self.edit_button_clicked
+        self.edit_button.place(x=LEFT_PAD+75, y=TOP_PAD+175)
+
         # delete button
         self.delete_button = Button(container, text='Delete', width=7, bootstyle="danger")
         self.delete_button['command'] = self.delete_button_clicked
-        self.delete_button.place(x=LEFT_PAD+82, y=TOP_PAD+175)
+        self.delete_button.place(x=LEFT_PAD+120, y=TOP_PAD+175)
 
         # hotkey label
         self.hotkey_label = Label(container, text='Hotkey')
@@ -70,16 +77,16 @@ class MainApp(Frame):
 
 
     def item_selected(self, event):
-        self.switch_form_state("normal")
+        # self.switch_form_state("normal")
         self.selectedItem = event.widget.get(event.widget.curselection()[0])
 
-        selectedText = self.hotkeysMap[self.selectedItem]
+        # selectedText = self.hotkeysMap[self.selectedItem]
 
-        self.value_text.delete('1.0', "end")
-        self.value_text.insert(tk.END, selectedText)
+        # self.value_text.delete('1.0', "end")
+        # self.value_text.insert(tk.END, selectedText)
 
-        self.key_entry.delete(0, "end")
-        self.key_entry.insert(0, self.selectedItem)
+        # self.key_entry.delete(0, "end")
+        # self.key_entry.insert(0, self.selectedItem)
 
     def save_button_clicked(self):
         key = self.key_entry.get()
@@ -109,6 +116,18 @@ class MainApp(Frame):
         self.reset_form()
         self.refresh_listbox()
         self.save_hotkeys_to_db()
+
+    def edit_button_clicked(self):
+        if self.selectedItem != None:
+            self.switch_form_state("normal")
+
+            selectedText = self.hotkeysMap[self.selectedItem]
+
+            self.value_text.delete('1.0', "end")
+            self.value_text.insert(tk.END, selectedText)
+
+            self.key_entry.delete(0, "end")
+            self.key_entry.insert(0, self.selectedItem)
 
     def get_hotkey_value(self):
         return self.value_text.get("1.0", "end").rstrip("\n")
