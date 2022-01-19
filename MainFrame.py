@@ -5,7 +5,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import Abbreviations
 
-class Window(ttk.Window):
+class MainFrame(ttk.Window):
     def __init__(self):
         super().__init__(themename="litera")
 

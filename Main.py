@@ -1,5 +1,5 @@
 import DAL
-from Window import Window
+from MainFrame import Window
 from MainApp import MainApp
 
 if __name__ == "__main__":
