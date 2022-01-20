@@ -1,12 +1,13 @@
 from pystray import MenuItem, Menu
 import pystray
 from PIL import Image
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 import Abbreviations
-import tkinter as tk
 
-class MainFrame(tk.Tk):
+class MainFrame(ttk.Window):
     def __init__(self):
-        super().__init__()
+        super().__init__(themename="litera")
 
         self.iconbitmap("./images/logo.ico")
         self.title('Hotkeys Manager')
