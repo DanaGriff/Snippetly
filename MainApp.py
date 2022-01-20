@@ -19,6 +19,10 @@ class MainApp(Frame):
         LEFT_PAD = 15
         TOP_PAD = 15
         
+        # hotkey label
+        self.available_Snippets_label = Label(container, text='Available Snippets:')
+        self.available_Snippets_label.place(x=LEFT_PAD, y=TOP_PAD)
+
         #hotkeys listbox
         items = tk.StringVar(value=[*self.hotkeysMap])
 
@@ -28,7 +32,7 @@ class MainApp(Frame):
             width=18,
             font=('TkDefaultFont', 11),
             selectmode='SINGLE')
-        self.listbox.place(x=LEFT_PAD, y=TOP_PAD)
+        self.listbox.place(x=LEFT_PAD, y=TOP_PAD+20)
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
         self.listbox.focus()
 
@@ -77,16 +81,7 @@ class MainApp(Frame):
 
 
     def item_selected(self, event):
-        # self.switch_form_state("normal")
         self.selectedItem = event.widget.get(event.widget.curselection()[0])
-
-        # selectedText = self.hotkeysMap[self.selectedItem]
-
-        # self.value_text.delete('1.0', "end")
-        # self.value_text.insert(tk.END, selectedText)
-
-        # self.key_entry.delete(0, "end")
-        # self.key_entry.insert(0, self.selectedItem)
 
     def save_button_clicked(self):
         key = self.key_entry.get()
@@ -97,7 +92,6 @@ class MainApp(Frame):
 
         self.reset_form()
         self.refresh_listbox()
-        
             
     def add_button_clicked(self):
         self.selectedItem = None
