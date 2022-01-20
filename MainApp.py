@@ -6,6 +6,7 @@ import DAL
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import webbrowser
+from SnippetsForm import SnippetsForm
 
 class MainApp(Frame):
 
@@ -15,6 +16,7 @@ class MainApp(Frame):
         self.selectedItem = None
         self.hotkeysMap = DAL.get_hotkeys_dict(data)
         self.data = data
+        self.container = container
 
         LEFT_PAD = 15
         TOP_PAD = 15
@@ -38,7 +40,7 @@ class MainApp(Frame):
 
         # Add button
         self.add_button = Button(container, text='Add', width=7, bootstyle="success")
-        self.add_button['command'] = self.add_button_clicked
+        self.add_button['command'] = self.add_button_clicked #= lambda: self.new_window(SnippetsForm) 
         self.add_button.place(x=LEFT_PAD, y=TOP_PAD+175)
 
         # edit button
@@ -156,4 +158,12 @@ class MainApp(Frame):
     def switch_form_state(self, set_state):
         self.save_button['state'] = set_state
         self.value_text.configure(state = set_state)
-        self.key_entry.configure(state = set_state, )
+        self.key_entry.configure(state = set_state)
+    
+    def new_window(self, _class):
+        try:
+            if self.new.state() == "normal":
+                self.new.focus()
+        except:
+            self.new = tk.Toplevel(self.container)
+            _class(self.new)
