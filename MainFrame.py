@@ -4,19 +4,22 @@ from PIL import Image
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import Abbreviations
+import Constants
+from Enums import FormState
 
 class MainFrame(ttk.Window):
     def __init__(self):
         super().__init__(themename="litera")
 
-        self.iconbitmap("images/fire-icon.ico")
+        self.iconbitmap(Constants.APP_ICON)
         self.title('Hotkeys Manager')
         self.geometry(self.set_window_size())
         self.resizable(False, False)
 
         self.protocol('WM_DELETE_WINDOW', self.hide_window)
+
     def set_window_size(self):
-        window_width = 485
+        window_width = 270
         window_height = 270
 
         # get the screen dimension
@@ -47,7 +50,7 @@ class MainFrame(ttk.Window):
         Abbreviations.hook()
 
         self.withdraw()
-        image = Image.open("images/fire-icon.ico")
+        image = Image.open(Constants.APP_ICON)
 
         menu = Menu(
             MenuItem('Quit', self.quit_window),

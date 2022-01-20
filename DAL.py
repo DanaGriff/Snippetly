@@ -52,8 +52,17 @@ def get_hotkeys_dict(data):
 
 def create_new_db_file():
     data_path = full_path('', 'data.json')
-    database_file = open(data_path, "x")
+    open(data_path, "x")
     data = json.loads('{"hotkeys": []}')
     save_to_db(data)
 
     return data
+
+def save_hotkeys_to_db(data, hotkeysMap):
+    data['hotkeys'] = []
+    for key, value in hotkeysMap.items():
+        attribute = { 'hotkey' : key, 'text' : value}
+
+    data['hotkeys'].append(attribute)
+
+    save_to_db(data)
