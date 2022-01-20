@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter.messagebox import showerror
-from tkinter.ttk import Frame, Label, Entry
-from tkinter import Text, Listbox, Menu, Toplevel, Message, PhotoImage, Button
+from tkinter.ttk import Frame, Button, Label, Entry
+from tkinter import Text, Listbox, Menu, Toplevel, Message
 import DAL
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import webbrowser
 
 class MainApp(Frame):
+
     def __init__(self, container, data):
         super().__init__(container)
 
@@ -30,6 +31,7 @@ class MainApp(Frame):
         self.listbox.place(x=LEFT_PAD, y=TOP_PAD)
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
         self.listbox.focus()
+
         # Add button
         self.add_button = Button(container, text='Add', width=7, bootstyle="success")
         self.add_button['command'] = self.add_button_clicked

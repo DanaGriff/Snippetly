@@ -9,7 +9,7 @@ class MainFrame(ttk.Window):
     def __init__(self):
         super().__init__(themename="litera")
 
-        self.iconbitmap("./images/logo.ico")
+        self.iconbitmap("images/fire-icon.ico")
         self.title('Hotkeys Manager')
         self.geometry(self.set_window_size())
         self.resizable(False, False)
@@ -47,7 +47,7 @@ class MainFrame(ttk.Window):
         Abbreviations.hook()
 
         self.withdraw()
-        image = Image.open("images/logo.ico")
+        image = Image.open("images/fire-icon.ico")
 
         menu = Menu(
             MenuItem('Quit', self.quit_window),
