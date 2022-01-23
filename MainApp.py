@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter.messagebox import showerror
 from tkinter.ttk import Frame, Button, Label, Entry
 from tkinter import Text, Listbox, Menu, Toplevel, Message
+from tkinter.messagebox import askyesno
 import DAL
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
@@ -59,9 +60,14 @@ class MainApp(Frame):
     
     def delete_button_clicked(self):
         if self.selectedItem != None:
-            self.hotkeysMap.pop(self.selectedItem)
-            self.refresh_listbox()
-            DAL.save_hotkeys_to_db(self.data, self.hotkeysMap)
+            answer = askyesno(title='Delete Snippet',
+                          message='Are you sure that you want to delete?')
+            if answer:
+                self.hotkeysMap.pop(self.selectedItem)
+                self.refresh_listbox()
+                DAL.save_hotkeys_to_db(self.data, self.hotkeysMap)
+                ##TODO change icon to askyesno
+            
 
     def open_url(self, url):
         webbrowser.open_new(url)

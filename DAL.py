@@ -62,7 +62,6 @@ def save_hotkeys_to_db(data, hotkeysMap):
     data['hotkeys'] = []
     for key, value in hotkeysMap.items():
         attribute = { 'hotkey' : key, 'text' : value}
-
-    data['hotkeys'].append(attribute)
+        data['hotkeys'].append(attribute)
 
     save_to_db(data)
