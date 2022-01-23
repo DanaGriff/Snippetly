@@ -43,9 +43,14 @@ class SnippetsForm:
         self.value_text.place(x=Constants.LEFT_PAD+60, y=Constants.TOP_PAD+46)
 
         # save button
-        self.save_button = Button(self.root, text='Save', width=10)
+
+        # cancel button
+        self.cancel_button = Button(self.root, text='Cancel', width=7, command = self.quit_window, bootstyle="danger")
+        self.cancel_button.place(x=Constants.LEFT_PAD+120, y=Constants.TOP_PAD+180)
+
+        self.save_button = Button(self.root, text='Save', width=7)
         self.save_button['command'] = self.save_button_clicked
-        self.save_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+180)
+        self.save_button.place(x=Constants.LEFT_PAD+190, y=Constants.TOP_PAD+180)
 
     def save_button_clicked(self):
         key = self.key_entry.get()
@@ -56,6 +61,9 @@ class SnippetsForm:
 
         ##TODO Close window
         ##TODO refresh list box
+
+    def quit_window(self):
+        self.root.destroy()
 
     def set_window_size(self):
         window_width = 290
