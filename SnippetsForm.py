@@ -22,30 +22,30 @@ class SnippetsForm:
         self.hotkeysMap = hotkeysMap
         self.data = data
 
-        LEFT_PAD = 15
-        TOP_PAD = 15
+        Constants.LEFT_PAD = 15
+        Constants.TOP_PAD = 15
         
         # hotkey label
         self.hotkey_label = Label(self.root, text='Hotkey')
-        self.hotkey_label.place(x=LEFT_PAD, y=TOP_PAD+3)
+        self.hotkey_label.place(x=Constants.LEFT_PAD, y=Constants.TOP_PAD+3)
 
         # hotkey entry
         self.hotkey = tk.StringVar()
         self.key_entry = Entry(self.root, textvariable=self.hotkey)
-        self.key_entry.place(x=LEFT_PAD+60, y=TOP_PAD)
+        self.key_entry.place(x=Constants.LEFT_PAD+60, y=Constants.TOP_PAD)
         
         # text label
         self.text_label = Label(self.root, text='Text')
-        self.text_label.place(x=LEFT_PAD, y=TOP_PAD+46)
+        self.text_label.place(x=Constants.LEFT_PAD, y=Constants.TOP_PAD+46)
 
         # hotkey text
         self.value_text = Text(self.root, height=7, width=30)
-        self.value_text.place(x=LEFT_PAD+60, y=TOP_PAD+46)
+        self.value_text.place(x=Constants.LEFT_PAD+60, y=Constants.TOP_PAD+46)
 
         # save button
         self.save_button = Button(self.root, text='Save', width=10)
         self.save_button['command'] = self.save_button_clicked
-        self.save_button.place(x=LEFT_PAD+170, y=TOP_PAD+180)
+        self.save_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+180)
 
     def save_button_clicked(self):
         key = self.key_entry.get()

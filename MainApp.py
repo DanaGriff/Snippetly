@@ -19,38 +19,36 @@ class MainApp(Frame):
         self.hotkeysMap = DAL.get_hotkeys_dict(data)
         self.data = data
         self.container = container
-
-        LEFT_PAD = 15
-        TOP_PAD = 15
         
         # hotkey label
         self.available_Snippets_label = Label(container, text='Available Snippets:')
-        self.available_Snippets_label.place(x=LEFT_PAD, y=TOP_PAD)
+        self.available_Snippets_label.place(x=Constants.LEFT_PAD, y=Constants.TOP_PAD)
 
         #hotkeys listbox
         items = tk.StringVar(value=[*self.hotkeysMap])
         self.listbox = Listbox(container, listvariable=items, height=10, width=20, font=('TkDefaultFont', 11), selectmode='SINGLE')
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
-        self.listbox.place(x=LEFT_PAD, y=TOP_PAD+20)
+        self.listbox.place(x=Constants.LEFT_PAD, y=Constants.TOP_PAD+20)
 
         # Add button
         self.add_button = Button(container, text='Add', width=7, command = lambda: self.open_snippets_form(FormState.ADD), bootstyle="success")
-        self.add_button.place(x=LEFT_PAD+170, y=TOP_PAD+20)
+        self.add_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+20)
 
         # edit button
-        self.edit_button = Button(container, text='Edit', width=7, command = lambda: self.open_snippets_form(FormState.EDIT) , bootstyle="default")
-        self.edit_button.place(x=LEFT_PAD+170, y=TOP_PAD+60)
+        self.edit_button = Button(container, text='Edit', width=7, command = lambda: self.open_snippets_form(FormState.EDIT) , bootstyle="default", state = "disabled")
+        self.edit_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+60)
 
         # delete button
-        self.delete_button = Button(container, text='Delete', width=7, command = self.delete_button_clicked, bootstyle="danger")
-        self.delete_button.place(x=LEFT_PAD+170, y=TOP_PAD+100)
+        self.delete_button = Button(container, text='Delete', width=7, command = self.delete_button_clicked, bootstyle="danger", state = "disabled")
+        self.delete_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+100)
 
         self.copyrights_label = Label(container, text=Constants.COPYRIGHTS_TEXT, foreground="blue", cursor="hand2")
         self.copyrights_label.bind("<Button-1>", lambda e: self.open_url(Constants.GITHUB_LINK))
-        self.copyrights_label.place(x=LEFT_PAD+180, y=TOP_PAD+230)
+        self.copyrights_label.place(x=Constants.LEFT_PAD+180, y=Constants.TOP_PAD+230)
 
     def item_selected(self, event):
         self.selectedItem = event.widget.get(event.widget.curselection()[0])
+        self.changeButtonsState("normal")
 
     def refresh_listbox(self):
         self.listbox.delete(0, tk.END)
@@ -66,8 +64,7 @@ class MainApp(Frame):
                 self.hotkeysMap.pop(self.selectedItem)
                 self.refresh_listbox()
                 DAL.save_hotkeys_to_db(self.data, self.hotkeysMap)
-                ##TODO change icon to askyesno
-            
+                self.changeButtonsState("disabled")
 
     def open_url(self, url):
         webbrowser.open_new(url)
@@ -78,3 +75,7 @@ class MainApp(Frame):
         elif self.selectedItem != None:
             value = self.hotkeysMap[self.selectedItem]
             SnippetsForm(tk.Toplevel(self.container), state, self.selectedItem, value, self.data, self.hotkeysMap)
+
+    def changeButtonsState(self, buttonState):
+        self.edit_button.configure(state = buttonState)
+        self.delete_button.configure(state = buttonState)
