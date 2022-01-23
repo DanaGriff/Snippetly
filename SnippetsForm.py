@@ -7,11 +7,15 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import webbrowser
 from Enums import FormState
+import Constants
 
 class SnippetsForm:
     def __init__(self, root, state, key, value, data, hotkeysMap):
         self.root = root
-        self.root.geometry("300x300+200+200")
+        self.root.iconbitmap(Constants.APP_ICON)
+        self.root.title('Hotkeys Manager')
+        self.root.resizable(False, False)
+        self.root.geometry(self.set_window_size())
 
         self.key = key
         self.value = value
@@ -52,3 +56,18 @@ class SnippetsForm:
 
         ##TODO Close window
         ##TODO refresh list box
+
+    def set_window_size(self):
+        window_width = 290
+        window_height = 250
+
+        # get the screen dimension
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+
+        # find the center point
+        center_x = int(screen_width / 2 - window_width / 2)+20
+        center_y = int(screen_height / 2 - window_height / 2)+20
+
+        # return the position of the window to the center of the screen
+        return f'{window_width}x{window_height}+{center_x}+{center_y}'
