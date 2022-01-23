@@ -8,5 +8,5 @@ def hook():
     for key, value in hotkeysMap.items():
         keyboard.add_abbreviation(key, value)
 
-def unhook(self):
+def unhook():
     keyboard.unhook_all()

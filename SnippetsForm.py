@@ -13,7 +13,7 @@ class SnippetsForm:
     def __init__(self, root, state, key, value, data, hotkeysMap):
         self.root = root
         self.root.iconbitmap(Constants.APP_ICON)
-        self.root.title('Hotkeys Manager')
+        self.root.title(Constants.APP_NAME)
         self.root.resizable(False, False)
         self.root.geometry(self.set_window_size())
 

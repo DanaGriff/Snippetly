@@ -45,7 +45,7 @@ class MainApp(Frame):
         self.delete_button = Button(container, text='Delete', width=7, command = self.delete_button_clicked, bootstyle="danger")
         self.delete_button.place(x=LEFT_PAD+170, y=TOP_PAD+100)
 
-        self.copyrights_label = Label(container, text="© Dana Griff", foreground="blue", cursor="hand2")
+        self.copyrights_label = Label(container, text=Constants.COPYRIGHTS_TEXT, foreground="blue", cursor="hand2")
         self.copyrights_label.bind("<Button-1>", lambda e: self.open_url(Constants.GITHUB_LINK))
         self.copyrights_label.place(x=LEFT_PAD+180, y=TOP_PAD+230)
 

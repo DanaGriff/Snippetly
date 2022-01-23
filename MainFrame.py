@@ -12,7 +12,7 @@ class MainFrame(ttk.Window):
         super().__init__(themename="litera")
 
         self.iconbitmap(Constants.APP_ICON)
-        self.title('Hotkeys Manager')
+        self.title(Constants.APP_NAME)
         self.geometry(self.set_window_size())
         self.resizable(False, False)
 
@@ -40,7 +40,7 @@ class MainFrame(ttk.Window):
 
     # Define a function to show the window again
     def show_window(self, icon, item):
-        self.abbreviations.unhook()
+        Abbreviations.unhook()
 
         icon.stop()
         self.after(0, self.deiconify())
@@ -57,5 +57,5 @@ class MainFrame(ttk.Window):
             MenuItem('Show', self.show_window, default=True)  # set 'Show' as the default action
         )
 
-        icon = pystray.Icon("name", image, "Hotkeys Manager", menu)
+        icon = pystray.Icon("name", image, Constants.APP_NAME, menu)
         icon.run()
