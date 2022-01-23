@@ -10,18 +10,21 @@ from Enums import FormState
 import Constants
 
 class SnippetsForm:
-    def __init__(self, root, state, key, value, data, hotkeysMap):
+    def __init__(self, root, mainApp, state, key, value, data, hotkeysMap):
         self.key = key
         self.value = value
         self.hotkeysMap = hotkeysMap
         self.data = data
+        self.mainApp = mainApp
 
         if state == FormState.ADD:
             self.action_button_label = "Add"
             self.action_title = "Add Snippet"
+            self.old_key = None
         else:
             self.action_button_label = "Save"
             self.action_title = "Edit Snippet"
+            self.old_key = key
 
 
         self.root = root
@@ -66,11 +69,14 @@ class SnippetsForm:
     def action_button_clicked(self):
         key = self.key_entry.get()
         if key != None and len(key) > 0:
+            if self.old_key != None:
+                self.hotkeysMap.pop(self.old_key)
+                
             self.hotkeysMap[key] = self.value_text.get("1.0", "end").rstrip("\n")
 
             DAL.save_hotkeys_to_db(self.data, self.hotkeysMap)
 
-            ##TODO refresh list box
+            self.mainApp.refresh_listbox()
 
             self.quit_window()
         

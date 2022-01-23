@@ -71,10 +71,10 @@ class MainApp(Frame):
     
     def open_snippets_form(self, state):
         if state == FormState.ADD:
-            SnippetsForm(tk.Toplevel(self.container), state, '', '', self.data, self.hotkeysMap)
+            SnippetsForm(tk.Toplevel(self.container), self, state, '', '', self.data, self.hotkeysMap)
         elif self.selectedItem != None:
             value = self.hotkeysMap[self.selectedItem]
-            SnippetsForm(tk.Toplevel(self.container), state, self.selectedItem, value, self.data, self.hotkeysMap)
+            SnippetsForm(tk.Toplevel(self.container), self, state, self.selectedItem, value, self.data, self.hotkeysMap)
 
     def changeButtonsState(self, buttonState):
         self.edit_button.configure(state = buttonState)
