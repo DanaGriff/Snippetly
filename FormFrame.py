@@ -7,7 +7,6 @@ import DAL
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import webbrowser
-from SnippetsForm import SnippetsForm
 from Enums import FormState
 import Constants
 from FormContainer import FormContainer
