@@ -6,7 +6,7 @@ from ttkbootstrap.constants import *
 import Abbreviations
 import Constants
 from Enums import FormState
-import Utils
+import utils
 
 class AppContainer(ttk.Window):
     def __init__(self):
@@ -17,7 +17,7 @@ class AppContainer(ttk.Window):
 
         self.iconbitmap(Constants.APP_ICON)
         self.title(Constants.APP_NAME)
-        self.geometry(Utils.set_window_size(self, window_width, window_height))
+        self.geometry(utils.set_window_size(self, window_width, window_height))
         self.resizable(False, False)
 
         self.protocol('WM_DELETE_WINDOW', self.hide_window)

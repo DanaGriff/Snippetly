@@ -8,7 +8,7 @@ from ttkbootstrap.constants import *
 import webbrowser
 from Enums import FormState
 import Constants
-import Utils
+import utils
 
 class FormContainer(tk.Toplevel):
     def __init__(self, master, state):
@@ -28,7 +28,7 @@ class FormContainer(tk.Toplevel):
         self.iconbitmap(Constants.APP_ICON)
         self.title(self.action_title)
         self.resizable(False, False)
-        self.geometry(Utils.set_window_size(self, window_width, window_height))
+        self.geometry(utils.set_window_size(self, window_width, window_height))
         self.transient(self.master) # set to be on top of the main window
         self.grab_set() # hijack all commands from the master (clicks on the main window are ignored)
 
