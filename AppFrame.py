@@ -48,8 +48,9 @@ class AppFrame(ttk.Frame):
         self.copyrights_label.place(x=consts.LEFT_PAD+180, y=consts.TOP_PAD+230)
 
     def item_selected(self, event):
-        self.selectedItem = event.widget.get(event.widget.curselection()[0])
-        self.change_buttons_state("normal")
+        if len(event.widget.curselection()) > 0: 
+            self.selectedItem = event.widget.get(event.widget.curselection()[0])
+            self.change_buttons_state("normal")
 
     def refresh_listbox(self):
         self.listbox.delete(0, tk.END)
