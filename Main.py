@@ -5,7 +5,7 @@ from AppFrame import AppFrame
 if __name__ == "__main__":
     data = DAL.retrieve_db()
 
-    AppContainer = AppContainer()
-    AppFrame(AppContainer, data)
+    appContainer = AppContainer()
+    AppFrame(appContainer, data)
 
-    AppContainer.mainloop()
+    appContainer.mainloop()

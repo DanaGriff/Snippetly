@@ -10,6 +10,8 @@ import webbrowser
 from SnippetsForm import SnippetsForm
 from Enums import FormState
 import Constants
+from FormContainer import FormContainer
+from FormFrame import FormFrame
 
 class AppFrame(ttk.Frame):
     def __init__(self, container, data):
@@ -73,12 +75,13 @@ class AppFrame(ttk.Frame):
     def open_form(self, state):
         key = ''
         value = ''
-
+        
         if state == FormState.EDIT:
             key = self.selectedItem
             value = self.hotkeysMap[self.selectedItem]
-
-        SnippetsForm(tk.Toplevel(self.container), self, state, key, value, self.data, self.hotkeysMap)
+        
+        formContainer = FormContainer(self, state)
+        FormFrame(formContainer, state, key, value, self.data, self.hotkeysMap)
 
     def change_buttons_state(self, buttonState):
         self.edit_button.configure(state = buttonState)
