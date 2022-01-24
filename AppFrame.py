@@ -31,11 +31,11 @@ class AppFrame(ttk.Frame):
         self.listbox.place(x=Constants.LEFT_PAD, y=Constants.TOP_PAD+20)
 
         # Add button
-        self.add_button = Button(container, text='Add', width=7, command = lambda: self.open_snippets_form(FormState.ADD), bootstyle="success")
+        self.add_button = Button(container, text='Add', width=7, command = lambda: self.open_form(FormState.ADD), bootstyle="success")
         self.add_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+20)
 
         # edit button
-        self.edit_button = Button(container, text='Edit', width=7, command = lambda: self.open_snippets_form(FormState.EDIT) , bootstyle="default", state = "disabled")
+        self.edit_button = Button(container, text='Edit', width=7, command = lambda: self.open_form(FormState.EDIT) , bootstyle="default", state = "disabled")
         self.edit_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+60)
 
         # delete button
@@ -48,7 +48,7 @@ class AppFrame(ttk.Frame):
 
     def item_selected(self, event):
         self.selectedItem = event.widget.get(event.widget.curselection()[0])
-        self.changeButtonsState("normal")
+        self.change_buttons_state("normal")
 
     def refresh_listbox(self):
         self.listbox.delete(0, tk.END)
@@ -65,18 +65,21 @@ class AppFrame(ttk.Frame):
                 self.hotkeysMap.pop(self.selectedItem)
                 self.refresh_listbox()
                 DAL.save_hotkeys_to_db(self.data, self.hotkeysMap)
-                self.changeButtonsState("disabled")
+                self.change_buttons_state("disabled")
 
     def open_url(self, url):
         webbrowser.open_new(url)
     
-    def open_snippets_form(self, state):
-        if state == FormState.ADD:
-            SnippetsForm(tk.Toplevel(self.container), self, state, '', '', self.data, self.hotkeysMap)
-        elif self.selectedItem != None:
-            value = self.hotkeysMap[self.selectedItem]
-            SnippetsForm(tk.Toplevel(self.container), self, state, self.selectedItem, value, self.data, self.hotkeysMap)
+    def open_form(self, state):
+        key = ''
+        value = ''
 
-    def changeButtonsState(self, buttonState):
+        if state == FormState.EDIT:
+            key = self.selectedItem
+            value = self.hotkeysMap[self.selectedItem]
+
+        SnippetsForm(tk.Toplevel(self.container), self, state, key, value, self.data, self.hotkeysMap)
+
+    def change_buttons_state(self, buttonState):
         self.edit_button.configure(state = buttonState)
         self.delete_button.configure(state = buttonState)
