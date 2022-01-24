@@ -26,12 +26,13 @@ class SnippetsForm:
             self.action_title = "Edit Snippet"
             self.old_key = key
 
-
         self.root = root
         self.root.iconbitmap(Constants.APP_ICON)
         self.root.title(self.action_title)
         self.root.resizable(False, False)
         self.root.geometry(self.set_window_size())
+        self.root.transient(self.mainApp) # set to be on top of the main window
+        self.root.grab_set() # hijack all commands from the master (clicks on the main window are ignored)
 
         Constants.LEFT_PAD = 15
         Constants.TOP_PAD = 15
