@@ -1,7 +1,6 @@
 import sys
 import os
 import json
-from shutil import copyfile
 
 def full_path(sub_folder, file_name):
     if getattr(sys, 'frozen', False):  # running in a bundle

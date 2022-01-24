@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.messagebox import showerror
-from tkinter.ttk import Frame, Button, Label, Entry
-from tkinter import Text, Listbox, Menu, Toplevel, Message
+from tkinter.ttk import Button, Label
+from tkinter import Listbox
 from tkinter.messagebox import askyesno
 import DAL
 import ttkbootstrap as ttk

@@ -5,7 +5,6 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import Abbreviations
 import Constants
-from Enums import FormState
 import utils
 
 class AppContainer(ttk.Window):
