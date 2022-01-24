@@ -4,7 +4,7 @@ from PIL import Image
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import Abbreviations
-import Constants
+import consts
 import utils
 
 class AppContainer(ttk.Window):
@@ -14,8 +14,8 @@ class AppContainer(ttk.Window):
         window_width = 270
         window_height = 270
 
-        self.iconbitmap(Constants.APP_ICON)
-        self.title(Constants.APP_NAME)
+        self.iconbitmap(consts.APP_ICON)
+        self.title(consts.APP_NAME)
         self.geometry(utils.set_window_size(self, window_width, window_height))
         self.resizable(False, False)
 
@@ -38,12 +38,12 @@ class AppContainer(ttk.Window):
         Abbreviations.hook()
 
         self.withdraw()
-        image = Image.open(Constants.APP_ICON)
+        image = Image.open(consts.APP_ICON)
 
         menu = Menu(
             MenuItem('Show', self.show_window, default=True),  # set 'Show' as the default action
             MenuItem('Quit', self.quit_window)
         )
 
-        self.icon = pystray.Icon("name", image, Constants.APP_NAME, menu)
+        self.icon = pystray.Icon("name", image, consts.APP_NAME, menu)
         self.icon.run()

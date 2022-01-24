@@ -8,7 +8,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import webbrowser
 from Enums import FormState
-import Constants
+import consts
 from FormContainer import FormContainer
 from FormFrame import FormFrame
 
@@ -23,29 +23,29 @@ class AppFrame(ttk.Frame):
         
         # hotkey label
         self.available_Snippets_label = Label(container, text='Available Snippets:')
-        self.available_Snippets_label.place(x=Constants.LEFT_PAD, y=Constants.TOP_PAD)
+        self.available_Snippets_label.place(x=consts.LEFT_PAD, y=consts.TOP_PAD)
 
         #hotkeys listbox
         items = tk.StringVar(value=[*self.hotkeysMap])
         self.listbox = Listbox(container, listvariable=items, height=10, width=20, font=('TkDefaultFont', 11), selectmode='SINGLE')
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
-        self.listbox.place(x=Constants.LEFT_PAD, y=Constants.TOP_PAD+20)
+        self.listbox.place(x=consts.LEFT_PAD, y=consts.TOP_PAD+20)
 
         # Add button
         self.add_button = Button(container, text='Add', width=7, command = lambda: self.open_form(FormState.ADD), bootstyle="success")
-        self.add_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+20)
+        self.add_button.place(x=consts.LEFT_PAD+170, y=consts.TOP_PAD+20)
 
         # edit button
         self.edit_button = Button(container, text='Edit', width=7, command = lambda: self.open_form(FormState.EDIT) , bootstyle="default", state = "disabled")
-        self.edit_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+60)
+        self.edit_button.place(x=consts.LEFT_PAD+170, y=consts.TOP_PAD+60)
 
         # delete button
         self.delete_button = Button(container, text='Delete', width=7, command = self.delete_button_clicked, bootstyle="danger", state = "disabled")
-        self.delete_button.place(x=Constants.LEFT_PAD+170, y=Constants.TOP_PAD+100)
+        self.delete_button.place(x=consts.LEFT_PAD+170, y=consts.TOP_PAD+100)
 
-        self.copyrights_label = Label(container, text=Constants.COPYRIGHTS_TEXT, foreground="blue", cursor="hand2")
-        self.copyrights_label.bind("<Button-1>", lambda e: self.open_url(Constants.GITHUB_LINK))
-        self.copyrights_label.place(x=Constants.LEFT_PAD+180, y=Constants.TOP_PAD+230)
+        self.copyrights_label = Label(container, text=consts.COPYRIGHTS_TEXT, foreground="blue", cursor="hand2")
+        self.copyrights_label.bind("<Button-1>", lambda e: self.open_url(consts.GITHUB_LINK))
+        self.copyrights_label.place(x=consts.LEFT_PAD+180, y=consts.TOP_PAD+230)
 
     def item_selected(self, event):
         self.selectedItem = event.widget.get(event.widget.curselection()[0])
