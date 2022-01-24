@@ -59,7 +59,8 @@ class MainApp(Frame):
     def delete_button_clicked(self):
         if self.selectedItem != None:
             answer = askyesno(title='Delete Snippet',
-                          message='Are you sure that you want to delete?')
+                          message='Are you sure that you want to delete?',
+                          icon = 'warning')
             if answer:
                 self.hotkeysMap.pop(self.selectedItem)
                 self.refresh_listbox()
