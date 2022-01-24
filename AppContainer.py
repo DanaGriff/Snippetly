@@ -7,7 +7,7 @@ import Abbreviations
 import Constants
 from Enums import FormState
 
-class MainContainer(ttk.Window):
+class AppContainer(ttk.Window):
     def __init__(self):
         super().__init__(themename="litera")
 

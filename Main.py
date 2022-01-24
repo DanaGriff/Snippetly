@@ -1,11 +1,11 @@
 import DAL
-from MainContainer import MainContainer
-from MainApp import MainApp
+from AppContainer import AppContainer
+from AppFrame import AppFrame
 
 if __name__ == "__main__":
     data = DAL.retrieve_db()
 
-    MainContainer = MainContainer()
-    MainApp(MainContainer, data)
+    AppContainer = AppContainer()
+    AppFrame(AppContainer, data)
 
-    MainContainer.mainloop()
+    AppContainer.mainloop()

@@ -10,12 +10,12 @@ from Enums import FormState
 import Constants
 
 class SnippetsForm:
-    def __init__(self, root, mainApp, state, key, value, data, hotkeysMap):
+    def __init__(self, root, AppFrame, state, key, value, data, hotkeysMap):
         self.key = key
         self.value = value
         self.hotkeysMap = hotkeysMap
         self.data = data
-        self.mainApp = mainApp
+        self.AppFrame = AppFrame
 
         if state == FormState.ADD:
             self.action_button_label = "Add"
@@ -31,7 +31,7 @@ class SnippetsForm:
         self.root.title(self.action_title)
         self.root.resizable(False, False)
         self.root.geometry(self.set_window_size())
-        self.root.transient(self.mainApp) # set to be on top of the main window
+        self.root.transient(self.AppFrame) # set to be on top of the main window
         self.root.grab_set() # hijack all commands from the master (clicks on the main window are ignored)
 
         Constants.LEFT_PAD = 15
@@ -77,7 +77,7 @@ class SnippetsForm:
 
             DAL.save_hotkeys_to_db(self.data, self.hotkeysMap)
 
-            self.mainApp.refresh_listbox()
+            self.AppFrame.refresh_listbox()
 
             self.quit_window()
         

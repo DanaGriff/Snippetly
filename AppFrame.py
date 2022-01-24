@@ -11,7 +11,7 @@ from SnippetsForm import SnippetsForm
 from Enums import FormState
 import Constants
 
-class MainApp(Frame):
+class AppFrame(ttk.Frame):
     def __init__(self, container, data):
         super().__init__(container)
 
