@@ -6,43 +6,32 @@ from ttkbootstrap.constants import *
 import Abbreviations
 import Constants
 from Enums import FormState
+import Utils
 
 class AppContainer(ttk.Window):
     def __init__(self):
         super().__init__(themename="litera")
 
+        window_width = 270
+        window_height = 270
+
         self.iconbitmap(Constants.APP_ICON)
         self.title(Constants.APP_NAME)
-        self.geometry(self.set_window_size())
+        self.geometry(Utils.set_window_size(self, window_width, window_height))
         self.resizable(False, False)
 
         self.protocol('WM_DELETE_WINDOW', self.hide_window)
 
-    def set_window_size(self):
-        window_width = 270
-        window_height = 270
-
-        # get the screen dimension
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-
-        # find the center point
-        center_x = int(screen_width / 2 - window_width / 2)
-        center_y = int(screen_height / 2 - window_height / 2)
-
-        # return the position of the window to the center of the screen
-        return f'{window_width}x{window_height}+{center_x}+{center_y}'
-
     # Define a function for quit the window
-    def quit_window(self, icon, item):
-        icon.stop()
+    def quit_window(self):
+        self.icon.stop()
         self.destroy()
 
     # Define a function to show the window again
-    def show_window(self, icon, item):
+    def show_window(self):
         Abbreviations.unhook()
 
-        icon.stop()
+        self.icon.stop()
         self.after(0, self.deiconify())
 
     # Hide the window and show on the system taskbar
@@ -53,9 +42,9 @@ class AppContainer(ttk.Window):
         image = Image.open(Constants.APP_ICON)
 
         menu = Menu(
-            MenuItem('Quit', self.quit_window),
-            MenuItem('Show', self.show_window, default=True)  # set 'Show' as the default action
+            MenuItem('Show', self.show_window, default=True),  # set 'Show' as the default action
+            MenuItem('Quit', self.quit_window)
         )
 
-        icon = pystray.Icon("name", image, Constants.APP_NAME, menu)
-        icon.run()
+        self.icon = pystray.Icon("name", image, Constants.APP_NAME, menu)
+        self.icon.run()

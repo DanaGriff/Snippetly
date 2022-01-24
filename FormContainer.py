@@ -8,9 +8,9 @@ from ttkbootstrap.constants import *
 import webbrowser
 from Enums import FormState
 import Constants
+import Utils
 
 class FormContainer(tk.Toplevel):
-
     def __init__(self, master, state):
         tk.Toplevel.__init__(self)
 
@@ -22,10 +22,13 @@ class FormContainer(tk.Toplevel):
         else:
             self.action_title = "Edit Snippet"
 
+        window_width = 290
+        window_height = 250
+
         self.iconbitmap(Constants.APP_ICON)
         self.title(self.action_title)
         self.resizable(False, False)
-        self.geometry(self.set_window_size())
+        self.geometry(Utils.set_window_size(self, window_width, window_height))
         self.transient(self.master) # set to be on top of the main window
         self.grab_set() # hijack all commands from the master (clicks on the main window are ignored)
 
@@ -34,18 +37,3 @@ class FormContainer(tk.Toplevel):
         
     def quit_window(self):
         self.destroy()
-
-    def set_window_size(self):
-        window_width = 290
-        window_height = 250
-
-        # get the screen dimension
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-
-        # find the center point
-        center_x = int(screen_width / 2 - window_width / 2)+20
-        center_y = int(screen_height / 2 - window_height / 2)+20
-
-        # return the position of the window to the center of the screen
-        return f'{window_width}x{window_height}+{center_x}+{center_y}'
