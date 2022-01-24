@@ -9,12 +9,12 @@ from Enums import FormState
 import consts
 
 class FormFrame(ttk.Frame):
-    def __init__(self, container, state, key, value, data, hotkeysMap):
+    def __init__(self, container, state, key, value, data, snippetsMap):
         super().__init__(container)
 
         self.key = key
         self.value = value
-        self.hotkeysMap = hotkeysMap
+        self.snippetsMap = snippetsMap
         self.data = data
         self.container = container
 
@@ -28,13 +28,13 @@ class FormFrame(ttk.Frame):
         consts.LEFT_PAD = 15
         consts.TOP_PAD = 15
         
-        # hotkey label
-        self.hotkey_label = Label(self.container, text='Hotkey')
-        self.hotkey_label.place(x=consts.LEFT_PAD, y=consts.TOP_PAD+3)
+        # snippet label
+        self.snippet_label = Label(self.container, text='snippet')
+        self.snippet_label.place(x=consts.LEFT_PAD, y=consts.TOP_PAD+3)
 
-        # hotkey entry
-        self.hotkey = tk.StringVar()
-        self.key_entry = Entry(self.container, textvariable=self.hotkey)
+        # snippet entry
+        self.snippet = tk.StringVar()
+        self.key_entry = Entry(self.container, textvariable=self.snippet)
         self.key_entry.insert(END, self.key)
         self.key_entry.place(x=consts.LEFT_PAD+60, y=consts.TOP_PAD)
         self.key_entry.focus()
@@ -43,7 +43,7 @@ class FormFrame(ttk.Frame):
         self.text_label = Label(self.container, text='Text')
         self.text_label.place(x=consts.LEFT_PAD, y=consts.TOP_PAD+46)
 
-        # hotkey text
+        # snippet text
         self.value_text = Text(self.container, height=7, width=30)
         self.value_text.insert(END, self.value)
         self.value_text.place(x=consts.LEFT_PAD+60, y=consts.TOP_PAD+46)
@@ -62,11 +62,11 @@ class FormFrame(ttk.Frame):
         key = self.key_entry.get()
         if key != None and len(key) > 0:
             if self.old_key != None:
-                self.hotkeysMap.pop(self.old_key)
+                self.snippetsMap.pop(self.old_key)
                 
-            self.hotkeysMap[key] = self.value_text.get("1.0", "end").rstrip("\n")
+            self.snippetsMap[key] = self.value_text.get("1.0", "end").rstrip("\n")
 
-            DAL.save_hotkeys_to_db(self.data, self.hotkeysMap)
+            DAL.save_snippets_to_db(self.data, self.snippetsMap)
 
             self.container.master.refresh_listbox()
 

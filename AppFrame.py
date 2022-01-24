@@ -17,16 +17,16 @@ class AppFrame(ttk.Frame):
         super().__init__(container)
 
         self.selectedItem = None
-        self.hotkeysMap = DAL.get_hotkeys_dict(data)
+        self.snippetsMap = DAL.get_snippets_dict(data)
         self.data = data
         self.container = container
         
-        # hotkey label
+        # snippet label
         self.available_Snippets_label = Label(container, text='Available Snippets:')
         self.available_Snippets_label.place(x=consts.LEFT_PAD, y=consts.TOP_PAD)
 
-        #hotkeys listbox
-        items = tk.StringVar(value=[*self.hotkeysMap])
+        #snippets listbox
+        items = tk.StringVar(value=[*self.snippetsMap])
         self.listbox = Listbox(container, listvariable=items, height=10, width=20, font=('TkDefaultFont', 11), selectmode='SINGLE')
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
         self.listbox.place(x=consts.LEFT_PAD, y=consts.TOP_PAD+20)
@@ -55,7 +55,7 @@ class AppFrame(ttk.Frame):
     def refresh_listbox(self):
         self.listbox.delete(0, tk.END)
 
-        for i in self.hotkeysMap.keys():
+        for i in self.snippetsMap.keys():
             self.listbox.insert(tk.END, i)
     
     def delete_button_clicked(self):
@@ -64,9 +64,9 @@ class AppFrame(ttk.Frame):
                           message='Are you sure that you want to delete?',
                           icon = 'warning')
             if answer:
-                self.hotkeysMap.pop(self.selectedItem)
+                self.snippetsMap.pop(self.selectedItem)
                 self.refresh_listbox()
-                DAL.save_hotkeys_to_db(self.data, self.hotkeysMap)
+                DAL.save_snippets_to_db(self.data, self.snippetsMap)
                 self.change_buttons_state("disabled")
 
     def open_url(self, url):
@@ -78,10 +78,10 @@ class AppFrame(ttk.Frame):
         
         if state == FormState.EDIT:
             key = self.selectedItem
-            value = self.hotkeysMap[self.selectedItem]
+            value = self.snippetsMap[self.selectedItem]
         
         formContainer = FormContainer(self, state)
-        FormFrame(formContainer, state, key, value, self.data, self.hotkeysMap)
+        FormFrame(formContainer, state, key, value, self.data, self.snippetsMap)
 
     def change_buttons_state(self, buttonState):
         self.edit_button.configure(state = buttonState)

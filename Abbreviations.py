@@ -3,9 +3,9 @@ import DAL
 
 def hook():
     data = DAL.retrieve_db()
-    hotkeysMap = DAL.get_hotkeys_dict(data)
+    snippetsMap = DAL.get_snippets_dict(data)
 
-    for key, value in hotkeysMap.items():
+    for key, value in snippetsMap.items():
         keyboard.add_abbreviation(key, value)
 
 def unhook():

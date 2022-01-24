@@ -38,29 +38,29 @@ def save_to_db(data):
     with open(data_path, 'w') as database_file:
         json.dump(data, database_file)
 
-def get_hotkeys_dict(data):
-    hotkeysMap = {}
+def get_snippets_dict(data):
+    snippetsMap = {}
 
-    for hotkey_i in data["hotkeys"]:
-        hotkey = hotkey_i["hotkey"]
-        text_to_copy = hotkey_i["text"]
+    for snippet_i in data["snippets"]:
+        snippet = snippet_i["snippet"]
+        text_to_copy = snippet_i["text"]
 
-        hotkeysMap[hotkey] = text_to_copy
+        snippetsMap[snippet] = text_to_copy
 
-    return hotkeysMap
+    return snippetsMap
 
 def create_new_db_file():
     data_path = full_path('', 'data.json')
     open(data_path, "x")
-    data = json.loads('{"hotkeys": []}')
+    data = json.loads('{"snippets": []}')
     save_to_db(data)
 
     return data
 
-def save_hotkeys_to_db(data, hotkeysMap):
-    data['hotkeys'] = []
-    for key, value in hotkeysMap.items():
-        attribute = { 'hotkey' : key, 'text' : value}
-        data['hotkeys'].append(attribute)
+def save_snippets_to_db(data, snippetsMap):
+    data['snippets'] = []
+    for key, value in snippetsMap.items():
+        attribute = { 'snippet' : key, 'text' : value}
+        data['snippets'].append(attribute)
 
     save_to_db(data)
