@@ -1,8 +1,7 @@
 import tkinter as tk
-from tkinter.messagebox import showerror
 from tkinter.ttk import Button, Label
-from tkinter import Listbox
-from tkinter.messagebox import askyesno
+from tkinter import Listbox, Menu
+from tkinter.messagebox import askyesno, showinfo
 import DAL
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
@@ -46,6 +45,14 @@ class AppFrame(ttk.Frame):
         self.copyrights_label = Label(container, text=consts.COPYRIGHTS_TEXT, foreground="blue", cursor="hand2")
         self.copyrights_label.bind("<Button-1>", lambda e: self.open_url(consts.GITHUB_LINK))
         self.copyrights_label.place(x=consts.LEFT_PAD+180, y=consts.TOP_PAD+230)
+
+        menubar = Menu(container)  
+        help = Menu(menubar, tearoff=0)  
+        help.add_command(label="About",  command=lambda: showinfo(
+                                        title='About Snippetly',
+                                        message='Snippetly is an app that replaces text by listening to your keyboard input.\n\nDefine which snippet you want to be replaced, and the text you want to replace it with.\n\nPlease keep the app running in the background.'))  
+        menubar.add_cascade(label="Help", menu=help)  
+        self.container.config(menu=menubar)  
 
     def item_selected(self, event):
         if len(event.widget.curselection()) > 0: 

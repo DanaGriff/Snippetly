@@ -29,7 +29,7 @@ class FormFrame(ttk.Frame):
         consts.TOP_PAD = 15
         
         # snippet label
-        self.snippet_label = Label(self.container, text='snippet')
+        self.snippet_label = Label(self.container, text='Snippet')
         self.snippet_label.place(x=consts.LEFT_PAD, y=consts.TOP_PAD+3)
 
         # snippet entry
