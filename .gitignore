@@ -4,4 +4,4 @@ TODO
 launch.json
 \build
 \dist
-main.spec
+*.spec

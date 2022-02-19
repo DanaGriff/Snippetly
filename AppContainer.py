@@ -14,7 +14,8 @@ class AppContainer(ttk.Window):
         window_width = 270
         window_height = 270
 
-        self.iconbitmap(consts.APP_ICON)
+        utils.set_window_icon(self)
+        
         self.title(consts.APP_NAME)
         self.geometry(utils.set_window_size(self, window_width, window_height))
         self.resizable(False, False)

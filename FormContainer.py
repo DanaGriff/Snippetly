@@ -19,7 +19,8 @@ class FormContainer(tk.Toplevel):
         window_width = 290
         window_height = 250
 
-        self.iconbitmap(consts.APP_ICON)
+        utils.set_window_icon(self)
+
         self.title(self.action_title)
         self.resizable(False, False)
         self.geometry(utils.set_window_size(self, window_width, window_height))
