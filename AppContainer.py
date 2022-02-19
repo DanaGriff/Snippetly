@@ -13,11 +13,12 @@ class AppContainer(ttk.Window):
 
         window_width = 270
         window_height = 270
+        self.geometry(utils.set_window_size(self, window_width, window_height))
 
         utils.set_window_icon(self)
         
         self.title(consts.APP_NAME)
-        self.geometry(utils.set_window_size(self, window_width, window_height))
+        
         self.resizable(False, False)
 
         self.protocol('WM_DELETE_WINDOW', self.hide_window)
