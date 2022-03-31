@@ -11,8 +11,8 @@ class AppContainer(ttk.Window):
     def __init__(self):
         super().__init__(themename="litera")
 
-        window_width = 270
-        window_height = 270
+        window_width = 295
+        window_height = 300
         self.geometry(utils.set_window_size(self, window_width, window_height))
 
         utils.set_window_icon(self)

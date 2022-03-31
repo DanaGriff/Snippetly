@@ -26,21 +26,21 @@ class AppFrame(ttk.Frame):
 
         #snippets listbox
         items = tk.StringVar(value=[*self.snippetsMap])
-        self.listbox = Listbox(container, listvariable=items, height=10, width=20, font=('TkDefaultFont', 11), selectmode='SINGLE')
+        self.listbox = Listbox(container, listvariable=items, height=10, width=15, font=('TkDefaultFont', 11), selectmode='SINGLE')
         self.listbox.bind('<<ListboxSelect>>', self.item_selected)
         self.listbox.place(x=consts.LEFT_PAD, y=consts.TOP_PAD+20)
 
         # Add button
         self.add_button = Button(container, text='Add', width=7, command = lambda: self.open_form(FormState.ADD), bootstyle="success")
-        self.add_button.place(x=consts.LEFT_PAD+170, y=consts.TOP_PAD+20)
+        self.add_button.place(x=consts.LEFT_PAD+185, y=consts.TOP_PAD+20)
 
         # edit button
         self.edit_button = Button(container, text='Edit', width=7, command = lambda: self.open_form(FormState.EDIT) , bootstyle="default", state = "disabled")
-        self.edit_button.place(x=consts.LEFT_PAD+170, y=consts.TOP_PAD+60)
+        self.edit_button.place(x=consts.LEFT_PAD+185, y=consts.TOP_PAD+60)
 
         # delete button
         self.delete_button = Button(container, text='Delete', width=7, command = self.delete_button_clicked, bootstyle="danger", state = "disabled")
-        self.delete_button.place(x=consts.LEFT_PAD+170, y=consts.TOP_PAD+100)
+        self.delete_button.place(x=consts.LEFT_PAD+185, y=consts.TOP_PAD+100)
 
         self.copyrights_label = Label(container, text=consts.COPYRIGHTS_TEXT, foreground="blue", cursor="hand2")
         self.copyrights_label.bind("<Button-1>", lambda e: self.open_url(consts.GITHUB_LINK))
